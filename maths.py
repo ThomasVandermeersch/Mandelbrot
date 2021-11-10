@@ -8,6 +8,7 @@ def mandelbrot(c):
       z = c
     else : 
       z = (z*z)+c
+    i+=1
       
   return z
   
