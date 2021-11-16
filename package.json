@@ -1,0 +1,22 @@
+{
+  "name": "mandelbrot",
+  "version": "1.0.0",
+  "description": "Scalable architecture project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThomasVandermeersch/Mandelbrot.git"
+  },
+  "author": "Gaetan, Martin and Thomas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ThomasVandermeersch/Mandelbrot/issues"
+  },
+  "homepage": "https://github.com/ThomasVandermeersch/Mandelbrot#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
