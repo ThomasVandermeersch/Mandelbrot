@@ -28,5 +28,3 @@ function square(z) {
 }
 
 exports.isInMandelbrot = isInMandelbrot
-
-console.log(isInMandelbrot([0.4,0.01], 1000))
