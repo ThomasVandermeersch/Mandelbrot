@@ -1,55 +1,85 @@
-const bodyParser = require('body-parser');
-const servers = [{ ip: "127.0.0.1", port: "8080", state: "ready" }, { ip: "127.0.0.1", port: "8081", state: "ready" }];
-const http = require('http')
 
+// 1. Socket server
+
+const io = require('socket.io')(3000, {
+    cors: {
+        origin: true, // true means to use any frontend.
+    },
+})
+
+io.on('connection', socket => {
+    socket.emit('connection', "Bonjour, vous êtes bien connecté :)")
+
+    socket.on('request', req => {  // The request object structure is : { real: <float>, imag: <float>, itt: <float> }
+        requests.push({ data: { real: req.real, imag: req.imag, itt: req.itt }, socket: socket })
+
+        socket.emit('reqRecieved', `Position in queue (when request was done) : ${requests.length}`)
+        popFromQueue()
+    })
+})
+
+
+// 2. HTTP SERVER
+
+const bodyParser = require('body-parser');
+const fs = require('fs')
+
+var servers 
+fs.readFile('./servers.json', 'utf8' , (err, data) => {
+    if (err) return err
+    servers = JSON.parse(data)
+  })
+
+const http = require('http')
 
 var requests = [];
 var express = require('express');
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'pug');
+app.use(express.static('public')); //Load files from 'public' -> (CSS, image, JS...)
 
 
 function popFromQueue() {
-    const request = requests.shift()
-    console.log("Request : " + request)
-    var serverfound = false;
-    for (i = 0; i < servers.length && serverfound == false; i++) {
-        if (servers[i].state == "ready") {
-            servers[i].state = "busy";
-            serverfound = true;
-            url = `http://${servers[i].ip}:${servers[i].port}/inMandelbrot/2/1`
-            console.log(url)
+    if (requests.length == 0) return 0
+    const request = requests[0]
 
-            http.get(url, function(res){
+    var serverfound = false;
+    for (var i = 0; i < servers.length && serverfound == false; i++) {
+        if (servers[i].state == "ready") {
+            serverfound = true;
+            servers[i].state = "busy";
+            requests.shift() // Pop the request of the queue
+
+            url = `http://${servers[i].ip}:${servers[i].port}/inMandelbrot/${request.data.real}/${request.data.imag}`
+
+            http.get(url, function (res) {
                 var body = '';
-                
-            
-                res.on('data', function (chunk){
+
+                res.on('data', function (chunk) {
                     body += chunk;
                 });
-            
-                res.on('end', function(){
-                    var fbResponse = JSON.parse(body);
-                    console.log("Got a response: ", fbResponse);
+
+                res.on('end', function () {
+                    var response = JSON.parse(body);
+                    request.socket.emit('response', { request: request.data, response: response, resolved: servers[i - 1].name })
+                    console.log(servers)
+                    servers[i - 1].state = "ready";
+                    console.log('AF : ' + JSON.stringify(servers))
+                    popFromQueue()
                 });
-            }).on('error', function(e){
-                if(e.code == 'ECONNREFUSED'){
-                    servers[i].state = 'unavailable'
-                }
-                console.log("Got an error: ", e);
-            });
+            })//.on('error', function(e){
+            //     if(e.code == 'ECONNREFUSED') servers[i].state = 'unavailable'
+            //     else console.log("Got an error: ", e);
+            // });
         }
     };
 }
 
-app.get('/inMandelbrot/:real/:imag', function (req, res) {
-    requests.push([parseFloat(req.params.real), parseFloat(req.params.imag)])
-    popFromQueue()
 
-    console.log(servers);
-    res.send("Hello");
-    console.log(requests)
+app.get("/", function (req, res) {
+    res.render("./index.pug")
 })
 
 app.listen(8082)
