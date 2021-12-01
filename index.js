@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 
 
 app.get('/inMandelbrot/:real/:imag', async function (req, res) {
-    await delay(10000)
+    await delay(300)
     a = isInMandelbrot.isInMandelbrot([parseFloat(req.params.real),parseFloat(req.params.imag)], 1000);
     console.log(req.params);
     res.send(a);
@@ -19,3 +19,4 @@ app.get('/inMandelbrot/:real/:imag', async function (req, res) {
 
 app.listen(8081)
 app.listen(8080)
+app.listen(8083)
