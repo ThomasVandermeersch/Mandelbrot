@@ -11,7 +11,7 @@ io.on('connection', socket => {
     socket.emit('connection', "Bonjour, vous êtes bien connecté :)")
 
     socket.on('request', req => {  // The request object structure is : { real: <float>, imag: <float>, itt: <float> }
-        requests.push({ data: { real: req.real, imag: req.imag, itt: req.itt }, socket: socket })
+        requests.push({ data: { real: req.real, imag: req.imag, itt: req.itt, realCanvas : req.realCanvas, imagCanvas : req.imagCanvas }, socket: socket })
 
         socket.emit('reqRecieved', requests.length)
         popFromQueue()
@@ -64,9 +64,7 @@ function popFromQueue() {
                 res.on('end', function () {
                     var response = JSON.parse(body);
                     request.socket.emit('response', { request: request.data, response: response, resolved: servers[i - 1].name })
-                    console.log(servers)
                     servers[i - 1].state = "ready";
-                    console.log('AF : ' + JSON.stringify(servers))
                     popFromQueue()
                 });
             })//.on('error', function(e){
