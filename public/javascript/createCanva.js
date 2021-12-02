@@ -40,5 +40,16 @@ submitButton.addEventListener('click', e => {
 
 socket.on('response', data => {
     //console.log(data)
-    if(data.response[0]) ctx.fillRect(data.request.realCanvas, data.request.imagCanvas , 1, 1);
+    if(data.response[0]){ 
+        ctx.fillStyle = 'rgb(0,0,0)' 
+    }
+    else{
+        itt = data.response[1]
+        if(itt < 255) ctx.fillStyle = 'rgb(255,0,0)'
+        else if(itt > 255 && itt < 500) ctx.fillStyle = 'rgb(0,255,0)' 
+        else if(itt > 500 && itt < 750)ctx.fillStyle = 'rgb(0,0,255)'  
+        else ctx.fillStyle = 'rgb(255,255,255)' 
+    }
+    ctx.fillRect(data.request.realCanvas, data.request.imagCanvas , 1, 1);
+
 })
