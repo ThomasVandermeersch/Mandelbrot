@@ -17,10 +17,15 @@ div(class="container page")
             div(class="form-group col-md-6")
                 label(for="inputPassword4") Nombre d'ittérations
                 input(type="number",name="ptsAbs", class="form-control",value=1000, min=1, max= 100000, id='itt')
-            br
+            
+            div
+                br
             button(type="button", class="btn btn-success",id='submitButton') Soumettre
             
-            div(id=responseDiv)
+            div
+                br
+            div(class="success alert-success mt-2" role="success" id='responseDiv')
+        
 
 script(defer src="http://localhost:3000/socket.io/socket.io.js")
 script(defer src='/javascript/clientSocket.js')

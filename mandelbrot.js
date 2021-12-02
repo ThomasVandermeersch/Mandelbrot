@@ -7,7 +7,7 @@ function isInMandelbrot(z, n) {
         c = Math.pow(a[1], 2)   
         phi = Math.pow(b + c, 0.5)
         if (phi > 2)
-            return [false, i];
+            return false;
     }
     return true;
 

@@ -4,17 +4,22 @@ const real = document.getElementById('real')
 const imag = document.getElementById('imag')
 const itt = document.getElementById('itt')
 const submitButton = document.getElementById('submitButton')
+const responseDiv = document.getElementById("responseDiv")
+responseDiv.style.display = "none";
 
 socket.on('connection', data => {
   console.log(data)
 })
 
 socket.on('reqRecieved', data => {
-  //console.log(data)
+  responseDiv.style.display = "block";
+  responseDiv.innerHTML = `<h3> La requête a bien été prise en compte. </h3> <p> Position dans la file d'attente : ${data}</p>`
 })
 
 socket.on('response', data => {
   console.log(data)
+  if(data.response) responseDiv.innerHTML = `<h3> Le nombre : < ${data.request.real} + ${data.request.imag} i > fait partie du domaine de Mandelbrot ! </h3> <p> Réponse de "${data.resolved}" </p>`
+  else responseDiv.innerHTML = `<h3> Le nombre : < ${data.request.real} + ${data.request.imag} i > ne fait pas partie du domaine de Mandelbrot  ! </h3> <p> Réponse de "${data.resolved}" </p>`
 })
 
 

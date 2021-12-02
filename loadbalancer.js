@@ -13,7 +13,7 @@ io.on('connection', socket => {
     socket.on('request', req => {  // The request object structure is : { real: <float>, imag: <float>, itt: <float> }
         requests.push({ data: { real: req.real, imag: req.imag, itt: req.itt }, socket: socket })
 
-        socket.emit('reqRecieved', `Position in queue (when request was done) : ${requests.length}`)
+        socket.emit('reqRecieved', requests.length)
         popFromQueue()
     })
 })
