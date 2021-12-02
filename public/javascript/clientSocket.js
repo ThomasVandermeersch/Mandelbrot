@@ -18,8 +18,8 @@ socket.on('reqRecieved', data => {
 
 socket.on('response', data => {
   console.log(data)
-  if(data.response) responseDiv.innerHTML = `<h3> Le nombre : < ${data.request.real} + ${data.request.imag} i > fait partie du domaine de Mandelbrot ! </h3> <p> Réponse de "${data.resolved}" </p>`
-  else responseDiv.innerHTML = `<h3> Le nombre : < ${data.request.real} + ${data.request.imag} i > ne fait pas partie du domaine de Mandelbrot  ! </h3> <p> Réponse de "${data.resolved}" </p>`
+  if(data.response[0]) responseDiv.innerHTML = `<h3> Le nombre : < ${data.request.real} + ${data.request.imag} i > fait partie du domaine de Mandelbrot ! </h3> <p> Réponse de "${data.resolved}" </p> <p> Trouvé en ${data.response[1]} ittération(s)`
+  else responseDiv.innerHTML = `<h3> Le nombre : < ${data.request.real} + ${data.request.imag} i > ne fait pas partie du domaine de Mandelbrot  ! </h3> <p> Réponse de "${data.resolved}" </p> <p> Trouvé en ${data.response[1]} ittération(s)`
 })
 
 

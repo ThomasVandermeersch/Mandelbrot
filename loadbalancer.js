@@ -52,7 +52,7 @@ function popFromQueue() {
             servers[i].state = "busy";
             requests.shift() // Pop the request of the queue
 
-            url = `http://${servers[i].ip}:${servers[i].port}/inMandelbrot/${request.data.real}/${request.data.imag}`
+            url = `http://${servers[i].ip}:${servers[i].port}/inMandelbrot/${request.data.real}/${request.data.imag}/${request.data.itt}`
 
             http.get(url, function (res) {
                 var body = '';
@@ -82,4 +82,7 @@ app.get("/", function (req, res) {
     res.render("./index.pug")
 })
 
+app.get("/multiple", function (req, res) {
+    res.render("./multiple.pug")
+})
 app.listen(8082)

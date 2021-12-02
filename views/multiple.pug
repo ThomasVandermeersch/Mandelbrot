@@ -1,0 +1,44 @@
+include header.pug
+
+div(class="container page")
+    h1(class="mb-0") Construction d'une partie du domaine de Mandelbrot ?
+    br
+    br
+    form
+        h3 Partie réelle
+        div(class="form-group row")
+            div(class="form-group col-md-6")
+                label(for="inputEmail4") De
+                input(type="number", class="form-control", value= 0, id='realFrom')
+
+            div(class="form-group col-md-6")
+                label(for="inputPassword4") A
+                input(type="number", class="form-control", value=0, id='realTo')
+        
+        div
+            br
+        h3 Partie imaginaire
+        div(class="form-group row")
+            div(class="form-group col-md-6")
+                label(for="inputEmail4") De
+                input(type="number", class="form-control", value= 0, id='imagFrom')
+
+            div(class="form-group col-md-6")
+                label(for="inputPassword4") A
+                input(type="number", class="form-control", value=0, id='imagTo')
+            
+            div
+                br
+            button(type="button", class="btn btn-success",id='submitButton') Soumettre
+            
+            div
+                br
+            canvas(id='canvas' ,width="1000", height="1000",style=" border: 2px solid black")
+            //- w, h ==> number of pixels
+
+        
+
+script(defer src="http://localhost:3000/socket.io/socket.io.js")
+script(defer src='/javascript/clientSocket.js')
+script(defer src='/javascript/createCanva.js')
+
