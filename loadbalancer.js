@@ -14,6 +14,7 @@ io.on('connection', socket => {
         requests.push({ data: { real: req.real, imag: req.imag, itt: req.itt, realCanvas : req.realCanvas, imagCanvas : req.imagCanvas }, socket: socket })
 
         socket.emit('reqRecieved', requests.length)
+
         popFromQueue()
     })
 })
@@ -62,6 +63,7 @@ function popFromQueue() {
                 });
 
                 res.on('end', function () {
+
                     var response = JSON.parse(body);
                     request.socket.emit('response', { request: request.data, response: response, resolved: servers[i - 1].name })
                     servers[i - 1].state = "ready";

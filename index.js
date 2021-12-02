@@ -17,5 +17,5 @@ app.get('/inMandelbrot/:real/:imag/:itt', async function (req, res) {
 
 
 app.listen(8081)
-app.listen(8080)
+app.listen(8079)
 app.listen(8083)
