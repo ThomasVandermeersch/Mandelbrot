@@ -13,8 +13,8 @@ const imagTo = document.getElementById('imagTo')
 const submitButton = document.getElementById('submitButton')
 const canvas = document.getElementById('canvas');
 if (canvas.getContext) var ctx = canvas.getContext('2d');
-const width = 250   // to do, change 1000 in height from html ==> multiple.pug
-const height = 250 //corespond to number of pixels
+const width = 500   // to do, change 1000 in height from html ==> multiple.pug
+const height = 500 //corespond to number of pixels
 
 
 submitButton.addEventListener('click', e => {
@@ -32,9 +32,9 @@ submitButton.addEventListener('click', e => {
                 imag: parseFloat(realFrom.value) + (y * horizontalStep), //////////// <--- change "imagFrom"
                 itt: 1000
             }
-            socket.emit('request', req) 
+            socket.emit('request', req)
         }
-    }  
+    }
 })
 
 socket.on('response', data => {
@@ -44,16 +44,29 @@ socket.on('response', data => {
     }
     else {
         itt = data.response[1]
-        color = Math.floor(255 - (255/999) * itt)
-        console.log(color) 
-        showww = 'rgb(' + color + ', 255, 255 )' 
-        console.log(showww)
-        ctx.fillStyle = showww
+        color = Math.floor(255 - (255 / 999) * itt)
 
-         
 
-   
-        
+        cian = 'rgb(' + color + ', 255, 255 )'
+        pink = 'rgb(255,' + color + ', 255 )'
+        yellow = 'rgb(255, 255, ' + color + '  )'
+
+        if (itt < 10) ctx.fillStyle = 'rgb(139,0,0)'
+        else if (itt > 10 && itt < 120) ctx.fillStyle = cian
+
+        // if (itt < 120) ctx.fillStyle = cian
+        else if (itt > 120 && itt < 500) ctx.fillStyle = pink
+        else if (itt > 500 && itt < 750) ctx.fillStyle = yellow
+        else ctx.fillStyle = 'rgb(139,0,0)' //'rgb(255,255,255)'
+
+
+
+
+
+
+
+
+
         // if (itt < 10) ctx.fillStyle = 'rgb(255,255,255)'
         // else if (itt > 10 && itt < 120) ctx.fillStyle = 'rgb(255,0,0)' 
         // else if (itt > 120 && itt < 500) ctx.fillStyle = 'rgb(0,255,0)'
