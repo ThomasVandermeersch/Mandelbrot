@@ -44,21 +44,23 @@ socket.on('response', data => {
     }
     else {
         itt = data.response[1]
-        // color = Math.floor(255 - 0.024 * itt)
-        // console.log(color) 
+        color = Math.floor(255 - (255/999) * itt)
+        console.log(color) 
+        showww = 'rgb(' + color + ', 255, 255 )' 
+        console.log(showww)
+        ctx.fillStyle = 'rgb(' + color + ', 255, 255 )' 
+         
 
-        // ctx.fillStyle = 'rgb(' + color + ','+ color+',150)' 
-
-
+   
         
         // if (itt < 10) ctx.fillStyle = 'rgb(255,255,255)'
         // else if (itt > 10 && itt < 120) ctx.fillStyle = 'rgb(255,0,0)' 
         // else if (itt > 120 && itt < 500) ctx.fillStyle = 'rgb(0,255,0)'
         // else if (itt > 500 && itt < 750) ctx.fillStyle = 'rgb(0,0,255)'
-        // else ctx.fillStyle = 'rgb(255,255,255)'   
+        // else ctx.fillStyle = 'rgb(255,255,255)'    
 
 
-        ctx.fillStyle = 'rgb(255,255,255)'  
+        // ctx.fillStyle = 'rgb(255,255,255)'  
     }
     ctx.fillRect(data.request.realCanvas, data.request.imagCanvas, 1, 1);
 
