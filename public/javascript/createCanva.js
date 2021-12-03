@@ -29,12 +29,12 @@ submitButton.addEventListener('click', e => {
                 realCanvas: x,
                 imagCanvas: y,
                 real: parseFloat(realFrom.value) + (x * horizontalStep),
-                imag: parseFloat(imagFrom.value) + (y * verticalStep),
+                imag: parseFloat(realFrom.value) + (y * horizontalStep), //////////// <--- change "imagFrom"
                 itt: 1000
             }
-            socket.emit('request', req)
+            socket.emit('request', req) 
         }
-    }
+    }  
 })
 
 socket.on('response', data => {
@@ -48,7 +48,8 @@ socket.on('response', data => {
         console.log(color) 
         showww = 'rgb(' + color + ', 255, 255 )' 
         console.log(showww)
-        ctx.fillStyle = 'rgb(' + color + ', 255, 255 )' 
+        ctx.fillStyle = showww
+
          
 
    
