@@ -22,7 +22,7 @@ submitButton.addEventListener('click', e => {
     verticalStep = (parseFloat(imagTo.value) - parseFloat(imagFrom.value)) / height
 
 
-
+    requests = []
     for (var x = 0; x < width; x++) {
         for (var y = 0; y < height; y++) {
             req = {
@@ -30,12 +30,18 @@ submitButton.addEventListener('click', e => {
                 imagCanvas: y,
                 real: parseFloat(realFrom.value) + (x * horizontalStep),
                 imag: parseFloat(realFrom.value) + (y * horizontalStep), //////////// <--- change "imagFrom"
-                itt: 1000000000
+                itt: 100000
             }
-            socket.emit('request', req)
+            requests.push(req)
         }
     }
-})
+
+    for(var i = requests.length-1;i>=0;i--){
+        popIndex = Math.floor(Math.random() * requests.length)
+        req = requests[popIndex]
+        requests.splice(popIndex,1)
+        socket.emit('request', req)
+      }})
 
 socket.on('response', data => {
     //console.log(data)
