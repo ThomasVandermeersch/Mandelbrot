@@ -34,13 +34,6 @@ fs.readFile('./servers.json', 'utf8' , (err, data) => {
 const http = require('http')
 
 var requests = [];
-var express = require('express');
-var app = express();
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'pug');
-app.use(express.static('public')); //Load files from 'public' -> (CSS, image, JS...)
-
 
 function popFromQueue() {
     if (requests.length == 0) return 0
@@ -76,13 +69,3 @@ function popFromQueue() {
         }
     };
 }
-
-
-app.get("/", function (req, res) {
-    res.render("./index.pug")
-})
-
-app.get("/multiple", function (req, res) {
-    res.render("./multiple.pug")
-})
-app.listen(8082)

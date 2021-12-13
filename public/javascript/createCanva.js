@@ -13,8 +13,8 @@ const imagTo = document.getElementById('imagTo')
 const submitButton = document.getElementById('submitButton')
 const canvas = document.getElementById('canvas');
 if (canvas.getContext) var ctx = canvas.getContext('2d');
-const width = 500   // to do, change 1000 in height from html ==> multiple.pug
-const height = 500 //corespond to number of pixels
+const width = 250   // to do, change 1000 in height from html ==> multiple.pug
+const height = 250 //corespond to number of pixels
 
 
 submitButton.addEventListener('click', e => {
@@ -30,7 +30,7 @@ submitButton.addEventListener('click', e => {
                 imagCanvas: y,
                 real: parseFloat(realFrom.value) + (x * horizontalStep),
                 imag: parseFloat(realFrom.value) + (y * horizontalStep), //////////// <--- change "imagFrom"
-                itt: 1000
+                itt: 1000000000
             }
             socket.emit('request', req)
         }
