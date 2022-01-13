@@ -7,7 +7,7 @@ const submitButton = document.getElementById('submitButton')
 const responseDiv = document.getElementById("responseDiv")
 responseDiv.style.display = "none";
 
-socket.on('connection', data => {
+socket.on('connection', function(data){
   console.log(data)
 })
 
@@ -24,7 +24,7 @@ socket.on('response', data => {
 
 
 submitButton.addEventListener('click', e => {
-  e.preventDefault()
+  e.preventDefault() //de rester sur la page
   req = {real : parseFloat(real.value), imag : parseFloat(imag.value), itt : parseFloat(itt.value)}
   socket.emit('request', req)
 })

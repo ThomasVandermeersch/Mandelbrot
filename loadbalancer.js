@@ -10,41 +10,38 @@ const io = require('socket.io')(3000, {
 io.on('connection', socket => {
     socket.emit('connection', "Bonjour, vous êtes bien connecté :)")
 
-    socket.on('request', req => {  // The request object structure is : { real: <float>, imag: <float>, itt: <float> }
+    socket.on('request', function(req){  // The request object structure is : { real: <float>, imag: <float>, itt: <float> }
         requests.push({ data: { real: req.real, imag: req.imag, itt: req.itt, realCanvas : req.realCanvas, imagCanvas : req.imagCanvas }, socket: socket })
-
         socket.emit('reqRecieved', requests.length)
-
-        popFromQueue()
+        popFromQueue() // va essayer de voir s'il est possible de résoudre . Possible => serveur dispo
     })
 })
 
 
 // 2. HTTP SERVER
 
-const bodyParser = require('body-parser');
-const fs = require('fs')
+const fs = require('fs') //récupère une biblithèque qui nous permet de lire des fichiers . Pour lire le fichier server.json
 
 var servers 
 fs.readFile('./servers.json', 'utf8' , (err, data) => {
     if (err) return err
     servers = JSON.parse(data)
-  })
+})
 
-const http = require('http')
 
+const http = require('http') // bibiliothèque qui va nous permettre de faire des requêtes http vers les serveurs de calcul
 var requests = [];
 
 function popFromQueue() {
     if (requests.length == 0) return 0
     const request = requests[0]
 
-    var serverfound = false;
+    var serverfound = false; // on a pas trouvé de serveur pour faire nos calculs
     for (var i = 0; i < servers.length && serverfound == false; i++) {
         if (servers[i].state == "ready") {
             serverfound = true;
             servers[i].state = "busy";
-            requests.shift() // Pop the request of the queue
+            requests.shift() // Pop the request of the queue 
 
             url = `http://${servers[i].ip}:${servers[i].port}/inMandelbrot/${request.data.real}/${request.data.imag}/${request.data.itt}`
 
@@ -62,10 +59,7 @@ function popFromQueue() {
                     servers[i - 1].state = "ready";
                     popFromQueue()
                 });
-            })//.on('error', function(e){
-            //     if(e.code == 'ECONNREFUSED') servers[i].state = 'unavailable'
-            //     else console.log("Got an error: ", e);
-            // });
+            })
         }
     };
 }

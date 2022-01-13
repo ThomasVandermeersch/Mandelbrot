@@ -8,11 +8,11 @@ div(class="container page")
         div(class="form-group row")
             div(class="form-group col-md-6")
                 label(for="inputEmail4") Partie réelle
-                input(type="number",name="ptsRight" class="form-control", value= 0, id='real')
+                input(type="number",name="ptsRight" class="form-control", value= 0, id='real', step=0.1)
 
             div(class="form-group col-md-6")
                 label(for="inputPassword4") Partie imaginaire
-                input(type="number",name ="ptsWrong" class="form-control", value=0, id='imag')
+                input(type="number",name ="ptsWrong" class="form-control", value=0, id='imag', step=0.1)
             
             div(class="form-group col-md-6")
                 label(for="inputPassword4") Nombre d'ittérations

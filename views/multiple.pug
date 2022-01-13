@@ -5,27 +5,16 @@ div(class="container page")
     br
     br
     form
-        h3 Partie réelle
+        h3 Calculs
         div(class="form-group row")
             div(class="form-group col-md-6")
                 label(for="inputEmail4") De
-                input(type="number", class="form-control", value= 0, id='realFrom')
+                input(type="number", class="form-control", value= 0, id='realFrom' step=0.1)
 
             div(class="form-group col-md-6")
                 label(for="inputPassword4") A
-                input(type="number", class="form-control", value=0, id='realTo')
+                input(type="number", class="form-control", value=0, id='realTo' step=0.1)
         
-        div
-            br
-        h3 Partie imaginaire
-        div(class="form-group row")
-            div(class="form-group col-md-6")
-                label(for="inputEmail4") De
-                input(type="number", class="form-control", value= 0, id='imagFrom')
-
-            div(class="form-group col-md-6")
-                label(for="inputPassword4") A
-                input(type="number", class="form-control", value=0, id='imagTo')
             
             div
                 br

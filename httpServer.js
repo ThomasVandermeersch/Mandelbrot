@@ -1,8 +1,6 @@
-var bodyParser = require("body-parser")
 var express = require('express');
 var app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'pug');
 app.use(express.static('public')); //Load files from 'public' -> (CSS, image, JS...)
 
