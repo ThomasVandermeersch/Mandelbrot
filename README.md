@@ -8,8 +8,12 @@
 1. Clone this repository
 2. Install Node.JS
 3. Install dependecies
-``` npm install ```
+``` 
+npm install 
+```
 
 ## Run
 
-``` npm run start ```
+``` 
+npm run start 
+```
